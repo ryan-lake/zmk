@@ -81,7 +81,7 @@ class Compiler
   end
 
   PERMITTED_DTS_SECTIONS = %w[
-    behaviors macros combos conditional_layers keymap underglow-indicators
+    behaviors macros combos conditional_layers keymap underglow-indicators underglow-layer
   ].freeze
 
   def validate_devicetree!(dtsi)
