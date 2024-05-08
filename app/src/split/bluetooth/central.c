@@ -29,6 +29,7 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 #include <zmk/events/sensor_event.h>
 #include <zmk/events/battery_state_changed.h>
 #include <zmk/hid_indicators_types.h>
+#include <zmk/events/split_peripheral_layer_changed.h>
 
 static int start_scanning(void);
 
@@ -895,6 +896,9 @@ static void split_central_update_layers_callback(struct k_work *work) {
             LOG_ERR("Failed to send layers to peripheral (err %d)", err);
         } else {
             LOG_DBG("Sent Layers over to peripheral");
+            raise_zmk_split_peripheral_layer_changed(
+                (struct zmk_split_peripheral_layer_changed){.layers = layers});
+
         }
     }
 }
