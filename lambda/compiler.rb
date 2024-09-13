@@ -84,8 +84,15 @@ class Compiler
     behaviors macros combos conditional_layers keymap underglow-indicators underglow-layer
   ].freeze
 
+  DTS_STUB = <<~EOF
+    /dts-v1/;
+    / {
+      underglow_indicators: underglow-indicators {};
+    };
+  EOF
+
   def validate_devicetree!(dtsi)
-    dts = "/dts-v1/;\n" + dtsi
+    dts = DTS_STUB + dtsi
 
     stdout, stderr, status =
       Open3.capture3({}, 'dts2yml', unsetenv_others: true, stdin_data: dts)
