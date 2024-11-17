@@ -75,6 +75,9 @@ static int on_caps_word_binding_released(struct zmk_behavior_binding *binding,
 static const struct behavior_driver_api behavior_caps_word_driver_api = {
     .binding_pressed = on_caps_word_binding_pressed,
     .binding_released = on_caps_word_binding_released,
+#if IS_ENABLED(CONFIG_ZMK_BEHAVIOR_METADATA)
+    .get_parameter_metadata = zmk_behavior_get_empty_param_metadata,
+#endif // IS_ENABLED(CONFIG_ZMK_BEHAVIOR_METADATA)
 };
 
 static int caps_word_keycode_state_changed_listener(const zmk_event_t *eh);
@@ -166,10 +169,7 @@ static int behavior_caps_word_init(const struct device *dev) {
 #define CAPS_WORD_LABEL(i, _n) DT_INST_LABEL(i)
 
 #define PARSE_BREAK(i)                                                                             \
-    {                                                                                              \
-        .page = ZMK_HID_USAGE_PAGE(i), .id = ZMK_HID_USAGE_ID(i),                                  \
-        .implicit_modifiers = SELECT_MODS(i)                                                       \
-    }
+    {.page = ZMK_HID_USAGE_PAGE(i), .id = ZMK_HID_USAGE_ID(i), .implicit_modifiers = SELECT_MODS(i)}
 
 #define BREAK_ITEM(i, n) PARSE_BREAK(DT_INST_PROP_BY_IDX(n, continue_list, i))
 
