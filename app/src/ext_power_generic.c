@@ -131,11 +131,6 @@ static int ext_power_settings_commit() {
     const struct device *dev = DEVICE_DT_GET(DT_DRV_INST(0));
     struct ext_power_generic_data *data = dev->data;
 
-    if (gpio_pin_configure_dt(&config->control, GPIO_OUTPUT_INACTIVE)) {
-        LOG_ERR("Failed to configure ext-power control pin");
-        return -EIO;
-    }
-
     if (!data->settings_init) {
 
         data->status = IS_ENABLED(CONFIG_ZMK_EXT_POWER_START);
